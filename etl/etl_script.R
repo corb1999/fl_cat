@@ -210,15 +210,50 @@ metadata_tag
 df <- df %>% mutate(metadata_tag = "NA")
 df[1, "metadata_tag"] <- metadata_tag
 
+dfa <- df
+
+# cleanup !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+rm(df, payload_list, payload, payload_stats, 
+   metadata_tag, fun_colnames_chk, fun_readfiles)
+ls()
+trash()
+sizer(dfa)
+obj_size(dfa)
+mem_used()
+
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-# write the cleaned dataset ---------------------------------------
+# write the cleaned dataset -
 
 # write to rds
-filename <- paste0(getwd(), "/etl/ingot/dataframe.rds")
+filename <- paste0(getwd(), "/etl/ingot/dataframe_rates.rds")
 clockin()
 saveRDS(dfa, file = filename)
 clockout()
+
+# ^ ----- 
+
+# pull and clean the data on the zip codes and groupings -----
+
+# load an excel file
+loader_path1 <- paste0(getwd(), 
+                       "/etl/ore/rating_regions/22zipzon.xlsx")
+clockin()
+raw_df <- read_excel(path = loader_path1, sheet = 1, 
+                     skip = 3)
+clockout()
+dim(raw_df)
+names(raw_df) <- c('zip_code', 'rating_region', 
+                   'county_code', 'county_name')
+head(raw_df)
+
+# pull in shapes of zips from census API then 
+#   create aggregate geometry for later mapping in analysis
+# ...........................................................
+# ...........................................................
+# ...........................................................
+# ...........................................................
+# ...........................................................
 
 # ^ ----- 
 
