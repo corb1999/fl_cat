@@ -77,7 +77,7 @@ cash_money <- function(x) {
 # load data and prepare data for analysis -------------------
 
 # load a rds file
-loader_path1 <- paste0(getwd(), "/etl/ingot/dataframe.rds")
+loader_path1 <- paste0(getwd(), "/etl/ingot/dataframe_rates.rds")
 clockin()
 raw_df <- readRDS(loader_path1)
 clockout()
@@ -95,9 +95,9 @@ mem_used()
 # date cleaning function for filtering in analysis -----------------
 
 fun_dater <- function(arg_sdt, arg_edt) {
-  x <- as.Date(arg_sdt)
-  y <- as.Date(arg_edt)
-  z <- paste0('Dates: ', x, ' to ', y, '; ')
+  x <- as.double(year(arg_sdt))
+  y <- as.double(year(arg_edt))
+  z <- paste0('Years: ', x, ' to ', y, '; ')
   return_me <- list(start_date = x, 
                     end_date = y, 
                     date_text_str = z)
@@ -115,5 +115,11 @@ etl_metadata <- read.csv(loader_path1, stringsAsFactors = FALSE)
 clockout()
 etl_metadata
 
-
 # ^ -----
+
+# snippet to call the function from the github repo
+
+source(file = paste0('https://raw.githubusercontent.com/', 
+                     'corb1999/cheatcraft/', 
+                     'main/gg_helper/my_gg/my_gg_settings.R'))
+

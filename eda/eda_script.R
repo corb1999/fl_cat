@@ -44,28 +44,33 @@ mem_used()
 
 # viz prep ---------------------------------------------------
 
-dt_filters <- fun_dater('2019-01-01', 
-                        '2020-01-01')
+dt_filters <- fun_dater('2011-01-01', 
+                        '2021-01-01')
 
-major_filter <- c('foo', 'bar')
-
-(pltname <- 'hello ' %ps% 
-    'world; ' %ps% 
-    reduce(major_filter, paste, sep = '; ') %ps% '; ' %ps% 
+(pltname <- 'FL CAT Rates; ' %ps% 
+    'Cov-Lvl=75%; ' %ps%
+    'Ded=0-2.5k; ' %ps% 
+    'Masonry Veneer; ' %ps% 
+    'Zip Group = 1/10/15/25; ' %ps% 
     dt_filters$date_text_str %ps% 
     '')
 
 dfplt <- dfa %>% 
-  filter(major %in% major_filter) %>% 
-  filter(date_var >= dt_filters$start_date, 
-         date_var <= dt_filters$end_date) %>% 
-  filter(foobar == 1)
+  filter(cov_lvl == 0.75) %>%
+  filter(ded_lvl == 'DED 0000-2500') %>% 
+  filter(construct_type %in% c('Masonry Veneer')) %>% 
+  filter(zip_code_group %in% c(1, 10, 15, 25)) %>% 
+  filter(rate_yr >= dt_filters$start_date, 
+         rate_yr <= dt_filters$end_date)
+
+grouper <- 'zip_code_group'
 
 # ^ -----
 
 # run plots and visuals ------------------------------------
 
+fun_scatter_1yr()
 
-
+fun_yrtrend1()
 
 # ^ -----
